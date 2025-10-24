@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cell Insurance Group Core-Values Crossword Puzzle</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                cell: '#fed41f', // Cell Insurance brand yellow
+                cellmed: '#10b981', // CellMed (emerald)
+                nectacare: '#7c3aed', // Nectacare (violet)
+              },
+            },
+            boxShadow: {
+              glow: '0 0 0 3px rgba(255,255,255,0.6), 0 0 30px rgba(250,204,21,0.7)',
+            },
+            keyframes: {
+              fadeIn: { '0%': { opacity: 0 }, '100%': { opacity: 1 } },
+              slideUp: { '0%': { transform: 'translateY(20px)', opacity: 0 }, '100%': { transform: 'translateY(0)', opacity: 1 } },
+              shake: {
+                '0%, 100%': { transform: 'translateX(0)' },
+                '20%': { transform: 'translateX(-6px)' },
+                '40%': { transform: 'translateX(6px)' },
+                '60%': { transform: 'translateX(-4px)' },
+                '80%': { transform: 'translateX(4px)' },
+              },
+              pulseGlow: {
+                '0%, 100%': { boxShadow: '0 0 0 0 rgba(250,204,21,0.6)' },
+                '50%': { boxShadow: '0 0 0 12px rgba(250,204,21,0)' },
+              },
+            },
+            animation: {
+              fadeIn: 'fadeIn 500ms ease-out',
+              slideUp: 'slideUp 500ms ease-out',
+              shake: 'shake 400ms ease-in-out',
+              pulseGlow: 'pulseGlow 1.2s ease-out',
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .grid-cell {
+        aspect-ratio: 1 / 1;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        transition: transform 120ms ease, background-color 120ms ease, color 120ms ease;
+      }
+      .grid-cell:hover { transform: translateY(-1px); }
+      .grid-cell.selected-temp { background-color: rgb(252 211 77); color: rgb(24 24 27); }
+      .found-glow { box-shadow: 0 0 0 3px rgba(255,255,255,0.5), 0 0 18px rgba(34,197,94,0.7) !important; }
+      .shake { animation: shake 400ms ease-in-out; }
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        20% { transform: translateX(-6px); }
+        40% { transform: translateX(6px); }
+        60% { transform: translateX(-4px); }
+        80% { transform: translateX(4px); }
+      }
+      .fly-label { position: fixed; left: 0; top: 0; pointer-events: none; z-index: 50; white-space: nowrap; }
+      .multi-stripe {
+        background-image: repeating-linear-gradient(45deg,
+          rgba(245,158,11,0.25) 0 10px,
+          rgba(16,185,129,0.25) 10px 20px,
+          rgba(124,58,237,0.25) 20px 30px
+        );
+      }
+      .tooltip {
+        position: fixed; z-index: 60; background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; border-radius: 8px;
+        padding: 6px 10px; font-size: 0.85rem; box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      }
+    </style>
+  </head>
+  <body class="bg-amber-50 min-h-screen text-zinc-800">
+    <!-- Landing Screen -->
+    <section id="landing" class="min-h-screen flex items-center justify-center p-6">
+      <div class="max-w-3xl w-full text-center animate-fadeIn">
+        <div class="mb-6 flex items-center justify-center gap-10">
+          <!-- Logos: wrapped in circular containers to avoid edge clipping -->
+          <div class="h-28 w-28 md:h-32 md:w-32 bg-white p-3 rounded-full shadow-lg flex items-center justify-center">
+            <img src="Cellinsurance Logo.png" alt="Cell Insurance" class="max-h-full max-w-full object-contain" />
+          </div>
+          <div class="h-28 w-28 md:h-32 md:w-32 bg-white p-3 rounded-full shadow-lg flex items-center justify-center">
+            <img src="Cellmed Logo.png" alt="CellMed" class="max-h-full max-w-full object-contain" />
+          </div>
+          <div class="h-28 w-28 md:h-32 md:w-32 bg-white p-3 rounded-full shadow-lg flex items-center justify-center">
+            <img src="Nectacare Logo.png" alt="Nectacare" class="max-h-full max-w-full object-contain" />
+          </div>
+        </div>
+  <h1 class="text-4xl md:text-6xl font-extrabold text-brand-cell tracking-tight mb-3">Cell Insurance Group</h1>
+        <p class="text-lg md:text-xl text-zinc-600 mb-10">Core-values Crossword Puzzle</p>
+  <button id="playBtn" class="px-8 py-3 rounded-full bg-brand-cell text-white font-semibold shadow-md hover:brightness-95 transition inline-flex items-center gap-2">
+          Play
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 15.707a1 1 0 010-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- Game Screen -->
+    <section id="game" class="hidden">
+      <div class="max-w-7xl mx-auto px-4 md:px-6 py-8">
+        <div class="mb-6 flex items-center justify-between">
+          <button id="backBtn" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border bg-white hover:bg-zinc-50 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L6.414 8H17a1 1 0 110 2H6.414l3.293 3.293a1 1 0 010 1.414z" clip-rule="evenodd"/></svg>
+            Back
+          </button>
+          <div class="text-center flex-1">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-brand-cell mb-1">Cell Insurance Group</h2>
+            <p class="text-zinc-500">Our Core Values Across Three Companies</p>
+            <div class="mt-1 text-xs md:text-sm text-zinc-400">Click/tap and drag to highlight words</div>
+          </div>
+          <div class="w-[70px]"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Grid Card -->
+          <div class="lg:col-span-8 bg-white/70 backdrop-blur rounded-2xl border border-amber-100 shadow-sm p-4 md:p-6 relative">
+            <div id="gridWrapper" class="rounded-xl border border-amber-200 p-2 md:p-3 bg-amber-300/70">
+              <div id="grid" class="grid gap-1 md:gap-1.5 select-none" aria-label="Crossword Grid"></div>
+            </div>
+            <div class="flex items-center justify-between mt-4 text-sm">
+              <div id="progressText" class="text-zinc-600"></div>
+              <button id="shuffleBtn" class="px-3 py-1.5 rounded-lg bg-zinc-800 text-white hover:bg-zinc-900 text-xs md:text-sm">Shuffle</button>
+            </div>
+          </div>
+
+          <!-- Company Headings / Found List -->
+          <aside class="lg:col-span-4 space-y-4">
+            <div class="bg-white rounded-2xl border border-amber-100 p-4 md:p-5">
+              <h3 class="text-lg font-semibold mb-3">Core Values to Find</h3>
+              <ul id="toFindList" class="flex flex-wrap gap-2 text-xs"></ul>
+            </div>
+            <div class="bg-white rounded-2xl border border-amber-100 p-4 md:p-5">
+              <h3 class="text-lg font-semibold text-brand-cell mb-2">Cell Insurance</h3>
+              <ul id="list-cell" class="min-h-[40px] space-y-1 text-sm"></ul>
+            </div>
+            <div class="bg-white rounded-2xl border border-amber-100 p-4 md:p-5">
+              <h3 class="text-lg font-semibold text-black mb-2">CellMed Health Medical Fund</h3>
+              <ul id="list-cellmed" class="min-h-[40px] space-y-1 text-sm"></ul>
+            </div>
+            <div class="bg-white rounded-2xl border border-amber-100 p-4 md:p-5">
+              <h3 class="text-lg font-semibold text-brand-nectacare mb-2">Nectacare</h3>
+              <ul id="list-nectacare" class="min-h-[40px] space-y-1 text-sm"></ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- Tooltip for invalid -->
+      <div id="tooltip" class="tooltip hidden">Not a core value — try again.</div>
+
+      <!-- Win Modal -->
+      <div id="winModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/40 p-4">
+        <div class="bg-white rounded-2xl p-6 md:p-8 w-full max-w-md text-center animate-slideUp">
+          <div class="text-6xl mb-2">🎉</div>
+          <h4 class="text-2xl font-bold mb-2">Congratulations!</h4>
+          <p class="text-zinc-600 mb-6">You’ve completed the Cell Insurance Group Core Values Crossword!</p>
+          <button id="playAgainBtn" class="px-5 py-2.5 rounded-lg bg-amber-500 text-white font-semibold hover:bg-amber-600">Play Again</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+    <!-- App Scripts -->
+    <script src="scripts/core-values.js"></script>
+    <script src="scripts/game.js"></script>
+  </body>
+</html>
