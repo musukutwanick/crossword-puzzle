@@ -117,18 +117,8 @@
     }
   }
 
-  function renderToFind() {
-    const ul = toFindList();
-    ul.innerHTML = '';
-    for (const { word, companies } of window.CORE_VALUES) {
-      const li = document.createElement('li');
-      li.dataset.word = word;
-      li.className = 'px-2 py-1 rounded-full border bg-amber-50 border-amber-200 text-zinc-700';
-      li.title = companies.join(' & ');
-      li.innerHTML = `<span class="chip-text font-semibold">${word}</span>`;
-      ul.appendChild(li);
-    }
-  }
+  // renderToFind intentionally left empty — the list has been removed so players must know values by head
+  function renderToFind() { return; }
 
   function updateProgress() {
     const total = window.CORE_VALUES.length;
@@ -234,13 +224,7 @@
       }
     }
 
-    // Mark in side list
-    const li = toFindList().querySelector(`[data-word="${word}"]`);
-    if (li) {
-      li.classList.add('opacity-60');
-      const span = li.querySelector('.chip-text');
-      if (span) span.classList.add('line-through');
-    }
+    // Side clues list removed — no UI marking required here
 
     // Fly label to each company bucket
     for (const key of companyKeys) {
@@ -331,7 +315,6 @@
     for (const key of Object.keys(COMPANY_COLOR_BY_KEY)) {
       listFor(key).innerHTML = '';
     }
-    renderToFind();
     updateProgress();
   }
 
@@ -435,7 +418,6 @@
 
   // Boot
   window.addEventListener('DOMContentLoaded', () => {
-    renderToFind();
     updateProgress();
     bindPointerEvents();
     initUI();
